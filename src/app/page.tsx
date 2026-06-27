@@ -1,65 +1,254 @@
-import Image from "next/image";
+import {
+  FolderKanban,
+  DollarSign,
+  Shield,
+  TrendingUp,
+  ArrowUpRight,
+  ArrowDownRight,
+} from "lucide-react";
+
+function KPICard({
+  title,
+  value,
+  change,
+  trend,
+  icon,
+}: {
+  title: string;
+  value: string;
+  change: string;
+  trend: "up" | "down" | "neutral";
+  icon: React.ReactNode;
+}) {
+  return (
+    <div className="rounded-xl border border-border bg-card p-5 shadow-sm">
+      <div className="flex items-start justify-between">
+        <div>
+          <p className="text-sm text-muted-foreground">{title}</p>
+          <p className="mt-1 text-2xl font-bold">{value}</p>
+          <div className="mt-2 flex items-center gap-1">
+            {trend === "up" ? (
+              <ArrowUpRight className="h-4 w-4 text-green-500" />
+            ) : trend === "down" ? (
+              <ArrowDownRight className="h-4 w-4 text-red-500" />
+            ) : null}
+            <span
+              className={`text-xs font-medium ${
+                trend === "up"
+                  ? "text-green-600"
+                  : trend === "down"
+                  ? "text-red-600"
+                  : "text-muted-foreground"
+              }`}
+            >
+              {change}
+            </span>
+          </div>
+        </div>
+        <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-orange-100">
+          {icon}
+        </div>
+      </div>
+    </div>
+  );
+}
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
+    <div className="space-y-6">
+      {/* Header */}
+      <div>
+        <h1 className="text-2xl font-bold tracking-tight">Dashboard</h1>
+        <p className="text-sm text-muted-foreground">
+          Overview of your construction projects
+        </p>
+      </div>
+
+      {/* KPI Cards */}
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <KPICard
+          title="Active Projects"
+          value="24"
+          change="+2 this month"
+          trend="up"
+          icon={<FolderKanban className="h-5 w-5 text-[#f97316]" />}
         />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+        <KPICard
+          title="Budget Utilized"
+          value="78%"
+          change="+12% vs last month"
+          trend="down"
+          icon={<DollarSign className="h-5 w-5 text-blue-600" />}
+        />
+        <KPICard
+          title="Open Safety Issues"
+          value="8"
+          change="-3 resolved"
+          trend="up"
+          icon={<Shield className="h-5 w-5 text-red-600" />}
+        />
+        <KPICard
+          title="AI Risk Score"
+          value="12%"
+          change="Low risk"
+          trend="neutral"
+          icon={<TrendingUp className="h-5 w-5 text-green-600" />}
+        />
+      </div>
+
+      {/* Charts Row */}
+      <div className="grid gap-4 lg:grid-cols-2">
+        {/* Project Progress */}
+        <div className="rounded-xl border border-border bg-card p-5 shadow-sm">
+          <h3 className="text-sm font-semibold mb-4">Project Progress</h3>
+          <div className="space-y-4">
+            {[
+              { name: "Office Renovation", progress: 78 },
+              { name: "Residential Complex", progress: 32 },
+              { name: "Warehouse Extension", progress: 65 },
+              { name: "Retail Unit", progress: 90 },
+            ].map((p) => (
+              <div key={p.name}>
+                <div className="flex justify-between text-sm mb-1">
+                  <span>{p.name}</span>
+                  <span className="text-muted-foreground">{p.progress}%</span>
+                </div>
+                <div className="h-2 rounded-full bg-muted">
+                  <div
+                    className="h-full rounded-full bg-[#f97316]"
+                    style={{ width: `${p.progress}%` }}
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+
+        {/* Budget Chart */}
+        <div className="rounded-xl border border-border bg-card p-5 shadow-sm">
+          <h3 className="text-sm font-semibold mb-4">Budget vs Actual</h3>
+          <div className="flex items-end justify-between gap-2 h-36">
+            {["Jan", "Feb", "Mar", "Apr", "May", "Jun"].map((m, i) => (
+              <div key={m} className="flex-1 flex flex-col items-center gap-1">
+                <div className="flex items-end gap-0.5 h-28">
+                  <div
+                    className="w-3 rounded-t bg-[#f97316]/70"
+                    style={{ height: `${60 + i * 8}%` }}
+                  />
+                  <div
+                    className="w-3 rounded-t bg-blue-500/70"
+                    style={{ height: `${50 + i * 10}%` }}
+                  />
+                </div>
+                <span className="text-[10px] text-muted-foreground">{m}</span>
+              </div>
+            ))}
+          </div>
+          <div className="mt-4 flex items-center justify-between border-t border-border pt-3 text-xs text-muted-foreground">
+            <span className="flex items-center gap-1.5">
+              <span className="h-2 w-2 rounded-full bg-[#f97316]" /> Budget
+            </span>
+            <span className="flex items-center gap-1.5">
+              <span className="h-2 w-2 rounded-full bg-blue-500" /> Actual
+            </span>
+          </div>
         </div>
-      </main>
+      </div>
+
+      {/* Activity + Deadlines */}
+      <div className="grid gap-4 lg:grid-cols-2">
+        {/* Activity */}
+        <div className="rounded-xl border border-border bg-card shadow-sm">
+          <div className="flex items-center justify-between border-b border-border px-5 py-4">
+            <h3 className="text-sm font-semibold">Recent Activity</h3>
+            <button className="text-xs text-[#f97316] font-medium">View All</button>
+          </div>
+          <div className="divide-y divide-border">
+            {[
+              "Project A updated",
+              "Safety report submitted",
+              "New subcontractor added",
+              "Cost estimate generated",
+            ].map((item, i) => (
+              <div key={i} className="px-5 py-3 text-sm">
+                {item}
+                <span className="ml-2 text-xs text-muted-foreground">
+                  {i + 1}h ago
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Deadlines */}
+        <div className="rounded-xl border border-border bg-card shadow-sm">
+          <div className="flex items-center justify-between border-b border-border px-5 py-4">
+            <h3 className="text-sm font-semibold">Upcoming Deadlines</h3>
+            <button className="text-xs text-[#f97316] font-medium">
+              View Calendar
+            </button>
+          </div>
+          <div className="divide-y divide-border">
+            {[
+              { title: "Tender Due", date: "Tomorrow", urgent: true },
+              { title: "RAMS Review", date: "Jun 28", urgent: false },
+              { title: "Inspection", date: "Jul 1", urgent: false },
+              { title: "Material Delivery", date: "Jul 3", urgent: false },
+            ].map((item, i) => (
+              <div key={i} className="flex items-center gap-3 px-5 py-3">
+                {item.urgent && (
+                  <span className="h-2 w-2 rounded-full bg-red-500" />
+                )}
+                <div className="flex-1">
+                  <p className="text-sm font-medium">{item.title}</p>
+                  <p className="text-xs text-muted-foreground">{item.date}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* AI Insights */}
+      <div className="rounded-xl border border-border bg-card shadow-sm">
+        <div className="flex items-center gap-2 border-b border-border px-5 py-4">
+          <TrendingUp className="h-4 w-4 text-[#f97316]" />
+          <h3 className="text-sm font-semibold">AI Recommendations</h3>
+        </div>
+        <div className="divide-y divide-border">
+          {[
+            {
+              type: "warning",
+              text: "Project Alpha may be delayed 6 days",
+            },
+            {
+              type: "danger",
+              text: "Concrete package exceeds estimate by 18%",
+            },
+            {
+              type: "warning",
+              text: "Safety incidents trending upward",
+            },
+            {
+              type: "success",
+              text: "Electrical package on schedule",
+            },
+          ].map((item, i) => (
+            <div key={i} className="flex items-center gap-3 px-5 py-3">
+              <span
+                className={`h-2 w-2 rounded-full ${
+                  item.type === "warning"
+                    ? "bg-orange-500"
+                    : item.type === "danger"
+                    ? "bg-red-500"
+                    : "bg-green-500"
+                }`}
+              />
+              <p className="text-sm">{item.text}</p>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 }
