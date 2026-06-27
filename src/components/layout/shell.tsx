@@ -2,8 +2,8 @@
 
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { Sidebar } from "./sidebar";
-import { Header } from "./header";
+import { Sidebar } from "../sidebar";
+import { Header } from "../header";
 import { useAuth } from "@/context/auth";
 
 export function DashboardLayout({ children }: { children: React.ReactNode }) {
@@ -24,7 +24,7 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
   if (!ready || isLoading || !user) {
     return (
       <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", background: "#f1f5f9" }}>
-        <div style={{ width: 40, height: 40, border: "3px solid #e2e8f0", borderTopColor: "#1e40af", borderRadius: "50%", animation: "spin 0.8s linear infinite" }} />
+        <div style={{ width: 40, height: 40, border: "3px solid #e2e8f0", borderTopColor: "#1e40af", borderRadius: "50%" }} className="animate-spin" />
       </div>
     );
   }
