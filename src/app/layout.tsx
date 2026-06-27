@@ -1,18 +1,13 @@
-import { Sidebar } from "@/components/sidebar";
-import { Header } from "@/components/header";
-
-export default function DashboardLayout({
+export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   return (
-    <div className="min-h-screen bg-background">
-      <Sidebar />
-      <Header />
-      <main className="pt-16 lg:pl-64">
-        <div className="p-4 lg:p-6">{children}</div>
-      </main>
-    </div>
+    <html lang="en">
+      <body style={{ margin: 0, padding: 0 }}>
+        {children}
+      </body>
+    </html>
   );
 }
