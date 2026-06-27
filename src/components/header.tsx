@@ -2,21 +2,19 @@ import { Search, Bell, Bot, User } from "lucide-react";
 
 export function Header() {
   return (
-    <header className="fixed left-0 right-0 top-0 z-30 flex h-16 items-center justify-between border-b border-border bg-white px-4 lg:left-64">
-      {/* Search */}
+    <header className="fixed left-0 right-0 top-0 z-30 flex h-16 items-center justify-between border-b border-gray-200 bg-white px-4 lg:left-64">
       <div className="relative">
-        <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+        <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
         <input
           type="search"
           placeholder="Search projects, logs, documents..."
-          className="h-10 w-72 rounded-lg border border-input bg-background pl-10 pr-4 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+          className="h-10 w-72 rounded-lg border border-gray-200 bg-white pl-10 pr-4 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500"
         />
       </div>
 
-      {/* Right */}
       <div className="flex items-center gap-3">
-        <button className="relative flex h-10 w-10 items-center justify-center rounded-lg hover:bg-muted">
-          <Bell className="h-5 w-5 text-muted-foreground" />
+        <button className="relative flex h-10 w-10 items-center justify-center rounded-lg hover:bg-gray-100">
+          <Bell className="h-5 w-5 text-gray-500" />
           <span className="absolute right-2 top-2 h-2 w-2 rounded-full bg-red-500" />
         </button>
 
@@ -25,9 +23,9 @@ export function Header() {
           <span className="hidden sm:inline">AI Assistant</span>
         </button>
 
-        <div className="h-6 w-px bg-border" />
+        <div className="h-6 w-px bg-gray-200" />
 
-        <div className="flex h-9 w-9 items-center justify-center rounded-full bg-primary text-sm font-semibold text-white">
+        <div className="flex h-9 w-9 items-center justify-center rounded-full bg-orange-500 text-sm font-semibold text-white">
           JM
         </div>
       </div>
